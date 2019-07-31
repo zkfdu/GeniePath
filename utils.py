@@ -96,8 +96,8 @@ def load_data(dataset_str): # {'pubmed', 'citeseer', 'cora'}
     y_val[val_mask, :] = labels[val_mask, :]
     y_test[test_mask, :] = labels[test_mask, :]
 
-    print(adj.shape)
-    print(features.shape)
+    print("adj.shape:",adj.shape)
+    print("features.shape:",features.shape)
 
     return adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask
 

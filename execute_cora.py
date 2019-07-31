@@ -34,7 +34,7 @@ print('no. layers: {}'.format(n_layer))
 print('no. hidden units: {}'.format(hidden_units))
 print('nonlinearity: {}'.format(nonlinearity))
 print('model: {}'.format(model))
-
+device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
 adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data(dataset)
 features, spars = preprocess_features(features)
 
@@ -153,3 +153,23 @@ with torch.no_grad():
         test_loss.item(), model.masked_accu(class_label, y_test, test_mask)))
     
 
+
+
+"""
+
+Epoch: 1130, train_loss, 0.83493, train_accu: 0.93571, val_loss: 1.20672, val_accu: 0.79000
+Epoch: 1131, train_loss, 0.81651, train_accu: 0.90714, val_loss: 1.20858, val_accu: 0.79000
+Epoch: 1132, train_loss, 0.80928, train_accu: 0.92143, val_loss: 1.21561, val_accu: 0.79000
+Epoch: 1133, train_loss, 0.86071, train_accu: 0.90000, val_loss: 1.24665, val_accu: 0.78800
+Epoch: 1134, train_loss, 0.82350, train_accu: 0.89286, val_loss: 1.20337, val_accu: 0.78200
+Epoch: 1135, train_loss, 0.76964, train_accu: 0.93571, val_loss: 1.22676, val_accu: 0.78400
+Epoch: 1136, train_loss, 0.93940, train_accu: 0.90000, val_loss: 1.23290, val_accu: 0.78200
+Epoch: 1137, train_loss, 0.77829, train_accu: 0.90000, val_loss: 1.24006, val_accu: 0.78400
+Epoch: 1138, train_loss, 0.88972, train_accu: 0.90000, val_loss: 1.19601, val_accu: 0.78000
+Epoch: 1139, train_loss, 0.81592, train_accu: 0.90000, val_loss: 1.22529, val_accu: 0.78000
+Epoch: 1140, train_loss, 0.80481, train_accu: 0.92857, val_loss: 1.23562, val_accu: 0.78200
+Early Stop! Epoch: 1140, max val_accu: 0.80400, min val_loss: 1.14783
+test_loss: 1.0858, accu: 0.7870
+test_loss: 1.1846, accu: 0.7890
+
+"""

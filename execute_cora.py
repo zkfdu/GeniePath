@@ -38,9 +38,9 @@ device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
 adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data(dataset)
 features, spars = preprocess_features(features)
 
-n_node = features.shape[0]
-ft_size = features.shape[1]
-n_class = y_train.shape[1]
+n_node = features.shape[0]# 2708
+ft_size = features.shape[1]#1433
+n_class = y_train.shape[1]#7
 
 adj = adj.todense()
 
@@ -109,8 +109,10 @@ for epoch in range(n_epochs):
         if val_accu >= val_accu_max or val_loss <= val_loss_min:
             if val_accu >= val_accu_max and val_loss <= val_loss_min:
                 print('best one, saved')
-                torch.save(model.state_dict(), './pretrained_model/genie.pt')
-                torch.save(model, './pretrained_model/entire_model.pt')
+                # torch.save(model.state_dict(), './pretrained_model/genie.pt')
+                torch.save(model.state_dict(), '/disk4/zk/charmsftp/ali_attention/GeniePath/pretrained_model/genie.pt')
+                # torch.save(model, './pretrained_model/entire_model.pt')
+                torch.save(model, '/disk4/zk/charmsftp/ali_attention/GeniePath/pretrained_model/entire_model.pt')
             val_accu_max = max([val_accu_max, val_accu])
             val_loss_min = min([val_loss_min, val_loss])
             n_waiting_step = 0

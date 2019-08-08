@@ -19,8 +19,8 @@ class AdaptiveBeadthFunc(torch.nn.Module):
 
         self.attn_dropout = attn_dropout
         self.ff_dropout = ff_dropout
-        
-        self.Ws = torch.nn.Linear(in_dim, out_dim, bias=False)
+        #有向和异质图很像，异质图meta-path包含有向
+        self.Ws = torch.nn.Linear(in_dim, out_dim, bias=False)#如果要有向，则除了W，其他所有层都变成 _in和 _out
         self.Wd = torch.nn.Linear(in_dim, out_dim, bias=False)
         self.W = torch.nn.Linear(in_dim, out_dim, bias=False)
         self.v = torch.nn.Linear(in_dim, 1, bias=False)
@@ -42,7 +42,7 @@ class AdaptiveBeadthFunc(torch.nn.Module):
         f_1 = self.v(torch.tanh(self.Ws(inputs)))
         f_2 = self.v(torch.tanh(self.Wd(inputs)))
         """
-        f_1 = self.v(self.Ws(inputs))
+        f_1 = self.v(self.Ws(inputs)) #如果要有向，就把这里f_1全都变成f_1_in和f1out，最后在 ret = self.W(torch.mm(coef, inputs))的时候，把coefin和coefout用torch.add加起来
         f_2 = self.v(self.Wd(inputs))
 
         f = f_1 + torch.transpose(f_2, 0, 1)
@@ -51,7 +51,7 @@ class AdaptiveBeadthFunc(torch.nn.Module):
         if bias_mtx is None:
             coef = self.normalize(coef, dim=-1)
         else:
-            coef = self.normalize(coef + bias_mtx, dim=-1)
+            coef = self.normalize(coef + bias_mtx, dim=-1)#in的时候+bias_mtx的转置
 
         coef = torch.nn.functional.dropout(coef, p=self.attn_dropout, training=training)
 

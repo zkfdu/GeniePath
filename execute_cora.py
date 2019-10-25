@@ -9,7 +9,7 @@ from utils import (
 
 dataset = 'cora'
 
-# training params
+# training params 
 batch_size = 1
 n_epochs = 10000
 patience = 200

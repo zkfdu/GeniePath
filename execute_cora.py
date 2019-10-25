@@ -19,7 +19,7 @@ attn_dropout = 0.4
 ff_dropout = 0.4
 hidden_units = 128
 n_layer = 3
-nonlinearity = torch.tanh
+nonlinearity = torch.tanh 
 model = GeniePath
 
 print('Dataset: ' + dataset)
